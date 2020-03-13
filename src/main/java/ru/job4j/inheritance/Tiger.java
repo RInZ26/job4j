@@ -13,4 +13,12 @@ public class Tiger extends Predator {
 	super();
 	System.out.println(Tiger.class.getName());
     }
+
+    /**
+     * Конструктор с именем
+     */
+    Tiger(String name) {
+	super(name);
+	System.out.println(Tiger.class.getName());
+    }
 }
