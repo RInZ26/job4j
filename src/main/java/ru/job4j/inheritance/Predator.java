@@ -9,14 +9,15 @@ public class Predator extends Animal {
     /**
      * Конструктор по умолчанию
      */
-    Predator() {
+    public Predator() {
 	super();
 	System.out.println(Predator.class.getName());
     }
+
     /**
      * Конструктор с именем
      */
-    Predator(String name) {
+    public Predator(String name) {
 	super(name);
 	System.out.println(Predator.class.getName());
     }

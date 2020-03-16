@@ -9,7 +9,7 @@ public class Tiger extends Predator {
     /**
      * Конструктор по умолчанию
      */
-    Tiger() {
+    public Tiger() {
 	super();
 	System.out.println(Tiger.class.getName());
     }
@@ -17,7 +17,7 @@ public class Tiger extends Predator {
     /**
      * Конструктор с именем
      */
-    Tiger(String name) {
+    public Tiger(String name) {
 	super(name);
 	System.out.println(Tiger.class.getName());
     }
