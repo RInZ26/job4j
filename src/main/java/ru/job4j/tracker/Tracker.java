@@ -60,11 +60,11 @@ public class Tracker {
     public Item[] fidByName(String key) {
 	Item[] items = new Item[this.position];
 	int size = 0;
-        for (int c = 0; c < position; c++) {
-            if (this.items[c].getName().equals(key)) {
-                items[size++] = this.items[c];
-            }
-        }
+	for (int c = 0; c < position; c++) {
+	    if (this.items[c].getName().equals(key)) {
+		items[size++] = this.items[c];
+	    }
+	}
 	return Arrays.copyOf(items, size);
     }
 
@@ -75,13 +75,44 @@ public class Tracker {
      * @return элемент есть ? id : null
      */
     public Item findById(String id) {
-	Item result = null;
-        for (int c = 0; c < position; c++) {
-            if (this.items[c].getId().equals(id)) {
-                result = this.items[c];
-                break;
-            }
-        }
+	int index = indexOf(id);
+	return index == -1 ? null : items[index];
+    }
+
+    /**
+     * Замена ячеек по id
+     *
+     * @param id   id ячейки, которой меняем
+     * @param item заявка, на которую меняем
+     * @return id есть ? поменяли true : false
+     */
+    public boolean replace(String id, Item item) {
+	boolean result = false;
+	int index = indexOf(id);
+	if (index != -1) {
+	    items[index] = item;
+	    items[index].setId(id);
+	    result = true;
+	}
 	return result;
     }
+
+    /**
+     * Возвращает индекс заявки в items, если нашли такой id
+     *
+     * @param id id
+     * @return индекс
+     */
+    private int indexOf(String id) {
+	int result = -1;
+	for (int c = 0; c < position; c++) {
+	    if (items[c].getId().equals(id)) {
+		result = c;
+		break;
+	    }
+	}
+	return result;
+    }
+
+
 }
