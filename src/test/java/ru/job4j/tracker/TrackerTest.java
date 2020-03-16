@@ -36,7 +36,7 @@ public class TrackerTest {
 	for (Item item : array) {
 	    tracker.add(item);
 	}
-	Item[] result = tracker.fidByName(name);
+	Item[] result = tracker.findByName(name);
 	Assert.assertEquals(result.length, 4);
     }
 

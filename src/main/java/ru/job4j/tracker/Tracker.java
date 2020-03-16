@@ -57,7 +57,7 @@ public class Tracker {
      * @param key ключ
      * @return отфильттрованный массив
      */
-    public Item[] fidByName(String key) {
+    public Item[] findByName(String key) {
 	Item[] items = new Item[this.position];
 	int size = 0;
 	for (int c = 0; c < position; c++) {
@@ -114,6 +114,10 @@ public class Tracker {
 	return result;
     }
 
+    /**
+     * Удаление элемента
+     * @param id id удаляемоего элемента
+     */
     public void delete(String id) {
         int index = indexOf(id);
         if (index != -1) {

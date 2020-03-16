@@ -4,6 +4,7 @@ import java.util.Objects;
 
 /**
  * Класс модель данных - заявка
+ *
  * @author RinZ26
  */
 public class Item {
@@ -34,5 +35,10 @@ public class Item {
 
     public void setName(String name) {
 	this.name = name;
+    }
+
+    @Override
+    public String toString() {
+	return " id = '" + id + '\'' + ", name = '" + name + '\'';
     }
 }
