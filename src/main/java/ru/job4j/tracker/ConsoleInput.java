@@ -1,22 +1,31 @@
 package ru.job4j.tracker;
 
 /**
- * Определяет работу получения данных от пользователя в консоли
+ * Класс замена Scanner
  *
  * @author RinZ26
  */
-public interface Input {
+public class ConsoleInput implements Input {
     /**
      * Аналог Scanner.nextLine()
+     *
      * @param question строка перед запросом ввода от пользовалея
      * @return пользовательская строка
      */
-    String askStr(String question);
+    @Override
+    public String askStr(String question) {
+	return null;
+    }
 
     /**
      * Аналог askStr, только с числов
+     *
      * @param question строка перед запросом ввода от пользовалея
      * @return пользовательское число
      */
-    int askInt(String question);
+    @Override
+    public int askInt(String question) {
+	return 0;
+    }
+
 }

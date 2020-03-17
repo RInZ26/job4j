@@ -8,12 +8,12 @@ import java.util.Scanner;
  * @author RinZ26
  */
 public class StartUI {
-    public void init(Scanner scanner, Tracker tracker) {
+    public void init(Input input, Tracker tracker) {
 	boolean run = true;
 	while (run) {
 	    this.showMenu();
 	    System.out.print("Select: ");
-	    int userDesire = Integer.parseInt(scanner.nextLine());
+	    int userDesire = Integer.parseInt(input.askStr(""));
 	    String id, name;
 	    Item item;
 	    Item[] items;
@@ -21,7 +21,7 @@ public class StartUI {
 		case 0:
 		    System.out.println(System.lineSeparator() + "=== Create a new item ===");
 		    System.out.print("Enter the name: ");
-		    name = scanner.nextLine();
+		    name = input.askStr("");
 		    tracker.add(new Item(name));
 		    break;
 		case 1:
@@ -33,21 +33,21 @@ public class StartUI {
 		case 2:
 		    System.out.println("=== Edit the item by id ===");
 		    System.out.print("Enter the item's id ");
-		    id = scanner.nextLine();
+		    id = input.askStr("");
 		    item = tracker.findById(id);
 		    if (item == null) {
 			System.out.println("The item with this id doesn't exist");
 		    } else {
 			System.out.printf("Changed item's name: %s ", item.getName());
 			System.out.print(System.lineSeparator() + "Enter new name for this item ");
-			String newItemName = scanner.nextLine();
+			String newItemName = input.askStr("");
 			System.out.println("Operation result: " + tracker.replace(id, new Item(newItemName)));
 		    }
 		    break;
 		case 3:
 		    System.out.println("=== Delete the item by id ===");
 		    System.out.print("Enter the item's id ");
-		    id = scanner.nextLine();
+		    id = input.askStr("");
 		    item = tracker.findById(id);
 		    if (item == null) {
 			System.out.println("The item with this id doesn't exist");
@@ -59,14 +59,14 @@ public class StartUI {
 		case 4:
 		    System.out.println("=== Find the item by id ===");
 		    System.out.print("Enter the item's id ");
-		    id = scanner.nextLine();
+		    id = input.askStr("");
 		    item = tracker.findById(id);
 		    System.out.println(item == null ? "The item with this id doesn't exist" : item);
 		    break;
 		case 5:
 		    System.out.println("=== Find the items by name ===");
 		    System.out.print("Enter the item's name ");
-		    name = scanner.nextLine();
+		    name = input.askStr("");
 		    items = tracker.findByName(name);
 		    if (items.length == 0) {
 			System.out.println("Nothing found");
@@ -108,6 +108,7 @@ public class StartUI {
 	for (Item item : array) {
 	    tracker.add(item);
 	}
-	testUI.init(new Scanner(System.in), tracker);
+	Input input = new ConsoleInput();
+	testUI.init(input, tracker);
     }
 }
