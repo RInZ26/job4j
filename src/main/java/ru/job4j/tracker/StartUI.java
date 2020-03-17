@@ -48,7 +48,7 @@ public class StartUI {
 	System.out.print("Enter the item's id ");
 	String id = input.askStr("");
 	Item item = tracker.findById(id);
-	if (item == null) {
+	if (item == Tracker.EMPTY_ITEM) {
 	    System.out.println("The item with this id doesn't exist");
 	} else {
 	    System.out.printf("Changed item's name: %s ", item.getName());
@@ -69,11 +69,11 @@ public class StartUI {
 	System.out.print("Enter the item's id ");
 	String id = input.askStr("");
 	Item item = tracker.findById(id);
-	if (item == null) {
+	if (item == Tracker.EMPTY_ITEM) {
 	    System.out.println("The item with this id doesn't exist");
 	} else {
 	    tracker.delete(id);
-	    System.out.println("Operation result: " + (tracker.findById(id) == null));
+	    System.out.println("Operation result: " + (tracker.findById(id) == Tracker.EMPTY_ITEM));
 	}
     }
 

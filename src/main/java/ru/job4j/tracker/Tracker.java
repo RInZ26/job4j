@@ -12,6 +12,10 @@ import java.util.Random;
  */
 public class Tracker {
     /**
+     * Анти Null, константа пустой заявки
+     */
+    public static final Item EMPTY_ITEM = new Item("empty_item");
+    /**
      * Массив для хранения заявок
      */
     private Item[] items = new Item[100];
@@ -72,11 +76,11 @@ public class Tracker {
      * Поиск элемента по id
      *
      * @param id id
-     * @return элемент есть ? id : null
+     * @return элемент есть ? id : Tracker.EMPTY_ITEM
      */
     public Item findById(String id) {
 	int index = indexOf(id);
-	return index == -1 ? null : items[index];
+	return index == -1 ? EMPTY_ITEM : items[index];
     }
 
     /**
@@ -116,12 +120,13 @@ public class Tracker {
 
     /**
      * Удаление элемента
+     *
      * @param id id удаляемоего элемента
      */
     public void delete(String id) {
-        int index = indexOf(id);
-        if (index != -1) {
-            System.arraycopy(items, index + 1, items, index, position-- - index);
+	int index = indexOf(id);
+	if (index != -1) {
+	    System.arraycopy(items, index + 1, items, index, position-- - index);
 	}
     }
 }
