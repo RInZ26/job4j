@@ -1,5 +1,8 @@
 package ru.job4j.tracker;
 
+import ru.job4j.poly.Transport;
+
+import javax.sound.midi.Track;
 import java.util.Scanner;
 
 /**
@@ -8,6 +11,117 @@ import java.util.Scanner;
  * @author RinZ26
  */
 public class StartUI {
+    /**
+     * Опция создать элемент
+     *
+     * @param input   отвечает за ввод данных от пользователя
+     * @param tracker коллекция заявок
+     */
+    public static void createItem(Input input, Tracker tracker) {
+	System.out.println(System.lineSeparator() + "=== Create a new item ===");
+	System.out.print("Enter the name: ");
+	String name = input.askStr("");
+	tracker.add(new Item(name));
+    }
+
+    /**
+     * Оппция показа всех элементов
+     *
+     * @param input   отвечает за ввод данных от пользователя
+     * @param tracker коллекция заявок
+     */
+    public static void showItems(Input input, Tracker tracker) {
+	System.out.println("=== Show the all items ===");
+	for (Item item1 : tracker.findAll()) {
+	    System.out.println(item1);
+	}
+    }
+
+    /**
+     * опция редактирования заявкки, аналог Tracker.replace
+     *
+     * @param input   отвечает за ввод данных от пользователя
+     * @param tracker коллекция заявок
+     */
+    public static void editItem(Input input, Tracker tracker) {
+	System.out.println("=== Edit the item by id ===");
+	System.out.print("Enter the item's id ");
+	String id = input.askStr("");
+	Item item = tracker.findById(id);
+	if (item == null) {
+	    System.out.println("The item with this id doesn't exist");
+	} else {
+	    System.out.printf("Changed item's name: %s ", item.getName());
+	    System.out.print(System.lineSeparator() + "Enter new name for this item ");
+	    String newItemName = input.askStr("");
+	    System.out.println("Operation result: " + tracker.replace(id, new Item(newItemName)));
+	}
+    }
+
+    /**
+     * Опция удаления элемента
+     *
+     * @param input   отвечает за ввод данных от пользователя
+     * @param tracker коллекция заявок
+     */
+    public static void deleteItem(Input input, Tracker tracker) {
+	System.out.println("=== Delete the item by id ===");
+	System.out.print("Enter the item's id ");
+	String id = input.askStr("");
+	Item item = tracker.findById(id);
+	if (item == null) {
+	    System.out.println("The item with this id doesn't exist");
+	} else {
+	    tracker.delete(id);
+	    System.out.println("Operation result: " + (tracker.findById(id) == null));
+	}
+    }
+
+    /**
+     * Опция поиска элемента из tracker по id
+     *
+     * @param input   отвечает за ввод данных от пользователя
+     * @param tracker коллекция заявок
+     * @return найденный элемент
+     */
+    public static Item findItemById(Input input, Tracker tracker) {
+	System.out.println("=== Find the item by id ===");
+	System.out.print("Enter the item's id ");
+	String id = input.askStr("");
+	Item item = tracker.findById(id);
+	System.out.println(item == null ? "The item with this id doesn't exist" : item);
+	return item;
+    }
+
+    /**
+     * Опция поиска заявок по ключу
+     *
+     * @param input   отвечает за ввод данных от пользователя
+     * @param tracker коллекция заявок
+     * @return возвращает отфильтрованный массив
+     */
+    public static Item[] findItemsByKey(Input input, Tracker tracker) {
+	System.out.println("=== Find the items by name ===");
+	System.out.print("Enter the item's name ");
+	String name = input.askStr("");
+	Item[] items = tracker.findByName(name);
+	if (items.length == 0) {
+	    System.out.println("Nothing found");
+	    items = null;
+	} else {
+	    for (Item i : items) {
+		System.out.println(i);
+	    }
+	}
+	return items;
+    }
+
+    /**
+     * Инициализируем работу UI
+     *
+     * @param input   отвечает за ввод данных
+     * @param tracker коллекция заявок
+     */
     public void init(Input input, Tracker tracker) {
 	boolean run = true;
 	while (run) {
@@ -19,62 +133,22 @@ public class StartUI {
 	    Item[] items;
 	    switch (userDesire) {
 		case 0:
-		    System.out.println(System.lineSeparator() + "=== Create a new item ===");
-		    System.out.print("Enter the name: ");
-		    name = input.askStr("");
-		    tracker.add(new Item(name));
+		    StartUI.createItem(input, tracker);
 		    break;
 		case 1:
-		    System.out.println("=== Show the all items ===");
-		    for (Item item1 : tracker.findAll()) {
-			System.out.println(item1);
-		    }
+		    StartUI.showItems(input, tracker);
 		    break;
 		case 2:
-		    System.out.println("=== Edit the item by id ===");
-		    System.out.print("Enter the item's id ");
-		    id = input.askStr("");
-		    item = tracker.findById(id);
-		    if (item == null) {
-			System.out.println("The item with this id doesn't exist");
-		    } else {
-			System.out.printf("Changed item's name: %s ", item.getName());
-			System.out.print(System.lineSeparator() + "Enter new name for this item ");
-			String newItemName = input.askStr("");
-			System.out.println("Operation result: " + tracker.replace(id, new Item(newItemName)));
-		    }
+		    StartUI.editItem(input, tracker);
 		    break;
 		case 3:
-		    System.out.println("=== Delete the item by id ===");
-		    System.out.print("Enter the item's id ");
-		    id = input.askStr("");
-		    item = tracker.findById(id);
-		    if (item == null) {
-			System.out.println("The item with this id doesn't exist");
-		    } else {
-			tracker.delete(id);
-			System.out.println("Operation result: " + (tracker.findById(id) == null));
-		    }
+		    StartUI.deleteItem(input, tracker);
 		    break;
 		case 4:
-		    System.out.println("=== Find the item by id ===");
-		    System.out.print("Enter the item's id ");
-		    id = input.askStr("");
-		    item = tracker.findById(id);
-		    System.out.println(item == null ? "The item with this id doesn't exist" : item);
+		    StartUI.findItemById(input, tracker);
 		    break;
 		case 5:
-		    System.out.println("=== Find the items by name ===");
-		    System.out.print("Enter the item's name ");
-		    name = input.askStr("");
-		    items = tracker.findByName(name);
-		    if (items.length == 0) {
-			System.out.println("Nothing found");
-		    } else {
-			for (Item i : items) {
-			    System.out.println(i);
-			}
-		    }
+		    StartUI.findItemsByKey(input, tracker);
 		    break;
 		case 6:
 		    run = false;
