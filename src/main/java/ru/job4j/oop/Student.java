@@ -5,7 +5,7 @@ package ru.job4j.oop;
  *
  * @author RinZ26
  */
-public class Student {
+public class Student extends Object {
     /**
      * Метод тра-та-та!
      */
