@@ -121,7 +121,6 @@ public class Tracker {
     public void delete(String id) {
         int index = indexOf(id);
         if (index != -1) {
-            Item[] newItems = new Item[items.length];
             System.arraycopy(items, index + 1, items, index, position-- - index);
 	}
     }

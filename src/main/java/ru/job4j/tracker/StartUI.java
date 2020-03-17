@@ -1,10 +1,5 @@
 package ru.job4j.tracker;
 
-
-import org.w3c.dom.ls.LSOutput;
-
-import java.sql.SQLOutput;
-import java.util.Arrays;
 import java.util.Scanner;
 
 /**
@@ -34,7 +29,6 @@ public class StartUI {
 		    for (Item item1 : tracker.findAll()) {
 			System.out.println(item1);
 		    }
-
 		    break;
 		case 2:
 		    System.out.println("=== Edit the item by id ===");
@@ -45,7 +39,7 @@ public class StartUI {
 			System.out.println("The item with this id doesn't exist");
 		    } else {
 			System.out.printf("Changed item's name: %s ", item.getName());
-			System.out.print(System.lineSeparator() +  "Enter new name for this item ");
+			System.out.print(System.lineSeparator() + "Enter new name for this item ");
 			String newItemName = scanner.nextLine();
 			System.out.println("Operation result: " + tracker.replace(id, new Item(newItemName)));
 		    }
@@ -110,7 +104,7 @@ public class StartUI {
 	StartUI testUI = new StartUI();
 	Tracker tracker = new Tracker();
 	String name = "test";
-	Item[] array = new Item[] {new Item(name), new Item(name), new Item(name), new Item(name + "1"), new Item(name)};
+	Item[] array = new Item[]{new Item(name), new Item(name), new Item(name), new Item(name + "1"), new Item(name)};
 	for (Item item : array) {
 	    tracker.add(item);
 	}
