@@ -26,13 +26,8 @@ public class DeleteAction implements UserAction {
     @Override
     public boolean execute(Input input, Tracker tracker) {
 	String id = input.askStr("Enter the item's id ");
-	Item item = tracker.findById(id);
-	if (item == Tracker.EMPTY_ITEM) {
-	    System.out.println("The item with this id doesn't exist");
-	} else {
-	    tracker.delete(id);
-	    System.out.println("Operation result: " + (tracker.findById(id) == Tracker.EMPTY_ITEM));
-	}
+	boolean resultOfOperation = tracker.delete(id);
+	System.out.println("Operation result " + resultOfOperation + (resultOfOperation ? "" : System.lineSeparator() +  "The item with this id doesn't exist"));
 	return true;
-    }
+}
 }

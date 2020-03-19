@@ -1,7 +1,7 @@
 package ru.job4j.tracker;
 
 /**
- *  * Класс -  Опция редактировать элемент
+ * * Класс -  Опция редактировать элемент
  */
 public class EditAction implements UserAction {
     /**
@@ -24,15 +24,8 @@ public class EditAction implements UserAction {
     @Override
     public boolean execute(Input input, Tracker tracker) {
 	String id = input.askStr("Enter the item's id ");
-	Item item = tracker.findById(id);
-	if (item == Tracker.EMPTY_ITEM) {
-	    System.out.println("The item with this id doesn't exist");
-	} else {
-	    System.out.printf("Changed item's name: %s ", item.getName());
-	    System.out.print(System.lineSeparator() + "Enter new name for this item ");
-	    String newItemName = input.askStr("");
-	    System.out.println("Operation result: " + tracker.replace(id, new Item(newItemName)));
-	}
+	String newItemName = input.askStr(System.lineSeparator() + "Enter new name for this item ");
+	System.out.println(System.lineSeparator() + "Operation result is " + tracker.replace(id, new Item(newItemName)));
 	return true;
     }
 }
