@@ -14,9 +14,7 @@ public class SquareTest {
 	Square square = new Square();
 	int size = 8;
 	StringJoiner sj = new StringJoiner(System.lineSeparator());
-	for (int c = 0; c < size; c++) {
-	    sj.add("***************");
-	}
-	Assert.assertThat(square.draw(), is(sj.toString()));
+	Assert.assertThat(square.draw(), is(sj.add("***************").add("***************").add("***************").add("***************")
+						.add("***************").add("***************").add("***************").add("***************").toString()));
     }
 }
