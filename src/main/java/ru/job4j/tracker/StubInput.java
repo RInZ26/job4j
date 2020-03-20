@@ -13,6 +13,18 @@ public class StubInput implements Input {
 	    this.answers = answers;
 	}
 
+	/**
+	 * Перегруженный метод, для проверки, что мы не вышли за предел доступных значений
+	 *
+	 * @param question ~
+	 * @param max      ~
+	 * @return ~
+	 */
+	@Override
+	public int askInt(String question, int max) {
+		return askInt(question);
+	}
+
 	@Override
 	public String askStr(String question) {
 	    return answers[position++];

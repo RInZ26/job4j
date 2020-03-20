@@ -14,29 +14,29 @@ public class StartUI {
      * @param tracker коллекция заявок
      */
     public void init(Input input, Tracker tracker, UserAction[] userActions) {
-	boolean run = true;
-	while (run) {
-	    this.showMenu(userActions);
-	    int userDesire = input.askInt("Select: ");
-	    run = userActions[userDesire].execute(input, tracker);
-	}
+        boolean run = true;
+        while (run) {
+            this.showMenu(userActions);
+            int userDesire = input.askInt("Select: ", userActions.length - 1);
+            run = userActions[userDesire].execute(input, tracker);
+        }
     }
 
     /**
      * Вывод меню на экран
      */
     public void showMenu(UserAction[] userActions) {
-	System.out.println("Menu:");
-	for (int c = 0; c < userActions.length; c++) {
-	    System.out.println(c + ". " + userActions[c].name());
-	}
+        System.out.println("Menu:");
+        for (int c = 0; c < userActions.length; c++) {
+            System.out.println(c + ". " + userActions[c].name());
+        }
     }
 
     public static void main(String[] args) {
-	StartUI testUI = new StartUI();
-	Tracker tracker = new Tracker();
-	Input input = new ConsoleInput();
-	UserAction[] userActions = new UserAction[]{new CreateAction(), new FindAllAction(), new EditAction(), new DeleteAction(), new FindItemsByIdAction(), new FindItemsByKeyAction(), new ExitAction()};
-	testUI.init(input, tracker, userActions);
+        StartUI testUI = new StartUI();
+        Tracker tracker = new Tracker();
+        Input validateInput = new ValidateInput();
+        UserAction[] userActions = new UserAction[]{new CreateAction(), new FindAllAction(), new EditAction(), new DeleteAction(), new FindItemsByIdAction(), new FindItemsByKeyAction(), new ExitAction()};
+        testUI.init(validateInput, tracker, userActions);
     }
 }

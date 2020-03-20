@@ -19,4 +19,12 @@ public interface Input {
      * @return пользовательское число
      */
     int askInt(String question);
+
+    /**
+     * Перегруженный метод, для проверки, что мы не вышли за предел доступных значений
+     * @param question ~
+     * @param max ~
+     * @return ~
+     */
+    int askInt(String question, int max);
 }
