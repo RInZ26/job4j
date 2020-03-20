@@ -23,7 +23,6 @@ public class PaintTest {
      */
     private final ByteArrayOutputStream out = new ByteArrayOutputStream();
 
-
     /**
      * Смена потока ввода
      */

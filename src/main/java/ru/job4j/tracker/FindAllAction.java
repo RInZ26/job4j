@@ -5,7 +5,7 @@ package ru.job4j.tracker;
  *
  * @author RinZ26
  */
-public class ShowAction implements UserAction {
+public class FindAllAction implements UserAction {
     /**
      * Возвращает название действия
      *

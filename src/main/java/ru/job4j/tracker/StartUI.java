@@ -26,9 +26,9 @@ public class StartUI {
      * Вывод меню на экран
      */
     public void showMenu(UserAction[] userActions) {
-	System.out.println(System.lineSeparator() + "Menu:");
+	System.out.println("Menu:");
 	for (int c = 0; c < userActions.length; c++) {
-	    System.out.println(c + " " + userActions[c].name());
+	    System.out.println(c + ". " + userActions[c].name());
 	}
     }
 
@@ -36,7 +36,7 @@ public class StartUI {
 	StartUI testUI = new StartUI();
 	Tracker tracker = new Tracker();
 	Input input = new ConsoleInput();
-	UserAction[] userActions = new UserAction[]{new CreateAction(), new ShowAction(), new EditAction(), new DeleteAction(), new FindItemsByIdAction(), new FindItemsByKeyAction(), new ExitAction()};
+	UserAction[] userActions = new UserAction[]{new CreateAction(), new FindAllAction(), new EditAction(), new DeleteAction(), new FindItemsByIdAction(), new FindItemsByKeyAction(), new ExitAction()};
 	testUI.init(input, tracker, userActions);
     }
 }
