@@ -33,9 +33,9 @@ public class StartUI {
     }
 
     public static void main(String[] args) {
+        Input validateInput = new ValidateInput(new ConsoleInput());
         StartUI testUI = new StartUI();
         Tracker tracker = new Tracker();
-        Input validateInput = new ValidateInput();
         UserAction[] userActions = new UserAction[]{new CreateAction(), new FindAllAction(), new EditAction(), new DeleteAction(), new FindItemsByIdAction(), new FindItemsByKeyAction(), new ExitAction()};
         testUI.init(validateInput, tracker, userActions);
     }

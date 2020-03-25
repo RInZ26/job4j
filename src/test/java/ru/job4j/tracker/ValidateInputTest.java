@@ -32,8 +32,9 @@ public class ValidateInputTest {
 
     @Test
     public void whenInvalidInput() {
-        String[] data = {"one", "1"};
-        Input input = new ValidateStubInput(data);
+        ValidateInput input = new ValidateInput(
+                new StubInput(new String[] {"one", "1"})
+        );
         input.askInt("Enter");
         assertThat(
                 mem.toString(),
@@ -43,13 +44,13 @@ public class ValidateInputTest {
 
     @Test
     public void whenNumberIsHigherThenArrayLength() {
-        //System.out.println("abba");
         String[] data = {"Enter", "102", "Enter", "2"};
-        Input input = new ValidateStubInput(data);
+        Input input =  new ValidateInput(
+                new StubInput(data));
         input.askInt("Enter", 10);
         assertThat(
                 mem.toString(),
-                is(String.format("Out of about 102 > [0, 10]%nPlease select key from menu.%n"))
+                is(String.format("Please enter validate data again.%n"))
         );
     }
 }
