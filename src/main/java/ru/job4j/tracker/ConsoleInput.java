@@ -20,7 +20,6 @@ public class ConsoleInput implements Input {
      */
     @Override
     public String askStr(String question) {
-	System.out.println(question);
 	return scanner.nextLine();
     }
 
@@ -32,8 +31,7 @@ public class ConsoleInput implements Input {
      */
     @Override
     public int askInt(String question) {
-	System.out.println(question);
-        return Integer.parseInt(scanner.nextLine());
+        return Integer.parseInt(askStr(question));
     }
 
     /**
@@ -45,7 +43,7 @@ public class ConsoleInput implements Input {
      */
     @Override
     public int askInt(String question, int max) {
-        int select = askInt(question);
+        int select = askInt(askStr(question));
         if (select >= 0 && select <= max) {
             return select;
         } else {

@@ -10,7 +10,7 @@ public class StubInput implements Input {
 	private int position = 0;
 
 	public StubInput(String[] answers) {
-	    this.answers = answers;
+		this.answers = answers;
 	}
 
 	/**
@@ -26,7 +26,7 @@ public class StubInput implements Input {
 		int value = -1;
 		do {
 			try {
-				value = Integer.parseInt(question, max);
+				value = Integer.parseInt(askStr(question), max);
 				invalid = false;
 			} catch (IllegalStateException ils) {
 				System.out.println(ils.getMessage());
@@ -40,7 +40,7 @@ public class StubInput implements Input {
 
 	@Override
 	public String askStr(String question) {
-	    return answers[position++];
+		return answers[position++];
 	}
 
 	@Override
@@ -49,7 +49,7 @@ public class StubInput implements Input {
 		int value = -1;
 		do {
 			try {
-				value = Integer.parseInt(question);
+				value = Integer.parseInt(askStr(question));
 				invalid = false;
 			} catch (NumberFormatException nfe) {
 				System.out.println("Please enter validate data again.");
