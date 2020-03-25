@@ -8,6 +8,7 @@ public class UserStore {
 
     /**
      * Поиск пользователя
+     *
      * @param users массив
      * @param login ключ
      * @return нашли ? user : EmptyUser
@@ -23,8 +24,12 @@ public class UserStore {
     }
 
     public static boolean validate(User user) throws UserInvalidException {
-        if (!user.isValid() || user.getUsername().length() < 3) {
+        if (!user.isValid()) {
             throw new UserInvalidException("This user is not validate");
+        }
+
+        if (user.getUsername().length() < 3) {
+            throw new UserInvalidException("Username require more then 3 symbols");
         }
         return true;
     }
