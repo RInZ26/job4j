@@ -2,7 +2,9 @@ package ru.job4j.tracker;
 
 import com.sun.source.tree.LiteralTree;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -16,23 +18,18 @@ public class Tracker {
      */
     public static final Item EMPTY_ITEM = new Item("empty_item");
     /**
-     * Массив для хранения заявок
+     * Список для хранения заявок
      */
-    private Item[] items = new Item[100];
-    /**
-     * Указатель для новой записи
-     */
-    private int position = 0;
+    private List<Item> items = new ArrayList();
 
     /**
-     * Добавление заявки в наш массив, вообще не помешала бы проверка на заполненность и копирование в новый массив при переполнении,
-     * чтоб уж полностью скопировать ArrayList
+     * Добавление в список
      *
      * @param item добавляемая заявка
      */
     public void add(Item item) {
-	item.setId(generateId());
-	items[position++] = item;
+        item.setId(generateId());
+        items.add(item);
     }
 
     /**
@@ -41,46 +38,50 @@ public class Tracker {
      * @return полученный id
      */
     private String generateId() {
-	Random rnd = new Random();
-	return String.valueOf(rnd.nextLong() + System.currentTimeMillis());
+        Random rnd = new Random();
+        return String.valueOf(rnd.nextLong() + System.currentTimeMillis());
     }
 
     /**
-     * Возвращает копию массива без null элементов, а у нас не NULL элементы лежат как раз от [0; position -1]
-     * то есть можно даже не проверять внутренние элементы
+     * Просто возвращаем список, по сути геттер
      *
-     * @return массив без null
+     * @return список без null
      */
-    public Item[] findAll() {
-	return Arrays.copyOf(items, position);
+    public List<Item> findAll() {
+        return items;
     }
 
     /**
-     * Возвращает массив, элементы Item.name == key
+     * Возвращает список, элементы Item.name == key
      *
      * @param key ключ
-     * @return отфильттрованный массив
+     * @return отфильттрованный список
      */
-    public Item[] findByName(String key) {
-	Item[] items = new Item[this.position];
-	int size = 0;
-	for (int c = 0; c < position; c++) {
-	    if (this.items[c].getName().equals(key)) {
-		items[size++] = this.items[c];
-	    }
-	}
-	return Arrays.copyOf(items, size);
+    public List<Item> findByName(String key) {
+        List<Item> result = new ArrayList<>();
+        for (Item item : items) {
+            if (item.getName().equals(key)) {
+                result.add(item);
+            }
+        }
+        return result;
     }
 
     /**
      * Поиск элемента по id
      *
      * @param id id
-     * @return элемент есть ? id : Tracker.EMPTY_ITEM
+     * @return элемент есть ? элемент : Tracker.EMPTY_ITEM
      */
     public Item findById(String id) {
-	int index = indexOf(id);
-	return index == -1 ? EMPTY_ITEM : items[index];
+        Item result = EMPTY_ITEM;
+        for (Item item : items) {
+            if (item.getId().equals(id)) {
+                result = item;
+                break;
+            }
+        }
+        return result;
     }
 
     /**
@@ -91,31 +92,15 @@ public class Tracker {
      * @return id есть ? поменяли true : false
      */
     public boolean replace(String id, Item item) {
-	boolean result = false;
-	int index = indexOf(id);
-	if (index != -1) {
-	    items[index] = item;
-	    items[index].setId(id);
-	    result = true;
-	}
-	return result;
-    }
-
-    /**
-     * Возвращает индекс заявки в items, если нашли такой id
-     *
-     * @param id id
-     * @return индекс
-     */
-    private int indexOf(String id) {
-	int result = -1;
-	for (int c = 0; c < position; c++) {
-	    if (items[c].getId().equals(id)) {
-		result = c;
-		break;
-	    }
-	}
-	return result;
+        boolean result = false;
+        for (int i = 0; i < items.size(); i++) {
+            if (items.get(i).getId().equals(id)) {
+                item.setId(id);
+                items.set(i, item);
+                result = true;
+            }
+        }
+        return result;
     }
 
     /**
@@ -124,10 +109,14 @@ public class Tracker {
      * @param id id удаляемоего элемента
      */
     public boolean delete(String id) {
-	int index = indexOf(id);
-	if (index != -1) {
-	    System.arraycopy(items, index + 1, items, index, position-- - index);
-	}
-	return index == -1;
+        boolean result = false;
+        for (Item item : items) {
+            if (item.getId().equals(id)) {
+                items.remove(item);
+                result = true;
+                break;
+            }
+        }
+        return result;
     }
 }

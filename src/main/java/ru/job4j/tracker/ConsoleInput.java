@@ -12,6 +12,7 @@ public class ConsoleInput implements Input {
      * Взаимодействие со Scanner
      */
     public static Scanner scanner = new Scanner(System.in);
+
     /**
      * Аналог Scanner.nextLine()
      *
@@ -20,7 +21,8 @@ public class ConsoleInput implements Input {
      */
     @Override
     public String askStr(String question) {
-	return scanner.nextLine();
+        System.out.println(question);
+        return scanner.nextLine();
     }
 
     /**
@@ -38,7 +40,7 @@ public class ConsoleInput implements Input {
      * Перегруженный метод, для проверки, что мы не вышли за предел доступных значений
      *
      * @param question ~
-     * @param max ~
+     * @param max      ~
      * @return ~
      */
     @Override

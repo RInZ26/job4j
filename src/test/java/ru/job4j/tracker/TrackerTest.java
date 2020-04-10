@@ -4,6 +4,8 @@ import org.junit.Assert;
 import org.junit.Test;
 import ru.job4j.pojo.LicenseTest;
 
+import java.util.List;
+
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.lessThanOrEqualTo;
 import static org.hamcrest.core.IsNull.nullValue;
@@ -36,8 +38,8 @@ public class TrackerTest {
 	for (Item item : array) {
 	    tracker.add(item);
 	}
-	Item[] result = tracker.findByName(name);
-	Assert.assertEquals(result.length, 4);
+	List<Item> result = tracker.findByName(name);
+	Assert.assertEquals(result.size(), 4);
     }
 
     @Test

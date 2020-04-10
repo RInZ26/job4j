@@ -1,5 +1,9 @@
 package ru.job4j.tracker;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * Класс - консольное приложенеие для работы с  Tracker
  *
@@ -13,30 +17,32 @@ public class StartUI {
      * @param input   отвечает за ввод данных
      * @param tracker коллекция заявок
      */
-    public void init(Input input, Tracker tracker, UserAction[] userActions) {
+    public void init(Input input, Tracker tracker, List<UserAction> userActions) {
         boolean run = true;
         while (run) {
             this.showMenu(userActions);
-            int userDesire = input.askInt("Select: ", userActions.length - 1);
-            run = userActions[userDesire].execute(input, tracker);
+            int userDesire = input.askInt("Select: ", userActions.size() - 1);
+            run = userActions.get(userDesire).execute(input, tracker);
         }
     }
 
     /**
      * Вывод меню на экран
      */
-    public void showMenu(UserAction[] userActions) {
+    public void showMenu(List<UserAction> userActions) {
+        int indexOfMenu = 0;
         System.out.println("Menu:");
-        for (int c = 0; c < userActions.length; c++) {
-            System.out.println(c + ". " + userActions[c].name());
+        for (UserAction userAction : userActions) {
+            System.out.println(indexOfMenu++ + ". " + userAction.name());
         }
+
     }
 
     public static void main(String[] args) {
         Input validateInput = new ValidateInput(new ConsoleInput());
         StartUI testUI = new StartUI();
         Tracker tracker = new Tracker();
-        UserAction[] userActions = new UserAction[]{new CreateAction(), new FindAllAction(), new EditAction(), new DeleteAction(), new FindItemsByIdAction(), new FindItemsByKeyAction(), new ExitAction()};
+        List<UserAction> userActions = Arrays.asList(new CreateAction(), new FindAllAction(), new EditAction(), new DeleteAction(), new FindItemsByIdAction(), new FindItemsByKeyAction(), new ExitAction());
         testUI.init(validateInput, tracker, userActions);
     }
 }

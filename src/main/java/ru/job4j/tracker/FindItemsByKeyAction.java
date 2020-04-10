@@ -1,5 +1,7 @@
 package ru.job4j.tracker;
 
+import java.util.List;
+
 /**
  * Класс 0 опция поиска элементов по ключу
  *
@@ -26,8 +28,8 @@ public class FindItemsByKeyAction implements UserAction {
     @Override
     public boolean execute(Input input, Tracker tracker) {
 	String name = input.askStr("Enter the item's name ");
-	Item[] items = tracker.findByName(name);
-	if (items.length == 0) {
+	List<Item> items = tracker.findByName(name);
+	if (items.size() == 0) {
 	    System.out.println("Nothing found");
 	} else {
 	    for (Item i : items) {

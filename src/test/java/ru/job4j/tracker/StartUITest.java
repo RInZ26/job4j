@@ -5,6 +5,8 @@ import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 import java.util.StringJoiner;
 
@@ -16,7 +18,7 @@ public class StartUITest {
     public void simpleInit() {
         Input stubInput = new StubInput(new String[]{"0"});
         StubAction userAction = new StubAction();
-        new StartUI().init(stubInput, new Tracker(), new UserAction[]{userAction});
+        new StartUI().init(stubInput, new Tracker(), Arrays.asList(userAction));
         Assert.assertThat(userAction.isCall(), is(true));
     }
 
@@ -29,7 +31,7 @@ public class StartUITest {
                 new String[]{"0"}
         );
         StubAction action = new StubAction();
-        new StartUI().init(input, new Tracker(), new UserAction[]{action});
+        new StartUI().init(input, new Tracker(), Arrays.asList(action));
         String expect = new StringJoiner(System.lineSeparator(), "", System.lineSeparator())
                 .add("Menu:")
                 .add("0. Stub action")
