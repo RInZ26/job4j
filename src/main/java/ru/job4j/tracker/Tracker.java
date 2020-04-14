@@ -110,12 +110,11 @@ public class Tracker {
      */
     public boolean delete(String id) {
         boolean result = false;
-        for (Item item : items) {
-            if (item.getId().equals(id)) {
-                items.remove(item);
-                result = true;
-                break;
-            }
+        for (int c = 0; c < items.size(); c++) {
+           if (items.get(c).getId().equals(id)) {
+               items.remove(c);
+               break;
+           }
         }
         return result;
     }
