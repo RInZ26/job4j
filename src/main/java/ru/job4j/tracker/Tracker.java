@@ -113,6 +113,7 @@ public class Tracker {
         for (int c = 0; c < items.size(); c++) {
            if (items.get(c).getId().equals(id)) {
                items.remove(c);
+               result = true;
                break;
            }
         }
