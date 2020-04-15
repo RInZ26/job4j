@@ -32,11 +32,9 @@ public class BankService {
      * @param account  аккаунт
      */
     public void addAccount(String passport, Account account) {
-        for (Map.Entry<User, List<Account>> userListEntry : users.entrySet()) {
-            if (userListEntry.getKey().getPassport().equals(passport)) {
-                userListEntry.getValue().add(account);
-                break;
-            }
+        User user = findByPassport(passport);
+        if (user != User.EMPTY_USER) {
+            users.get(user).add(account);
         }
     }
 
@@ -67,13 +65,10 @@ public class BankService {
     public Account findByRequisite(String passport, String requisite) {
         Account result = Account.EMPTY_ACCOUNT;
         User user = findByPassport(passport);
-        if (!user.equals(User.EMPTY_USER)) {
-            List<Account> temp = users.get(user);
-            for (int c = 0; c < temp.size(); c++) {
-                if (temp.get(c).getRequisite().equals(requisite)) {
-                    result = users.get(user).get(c);
-                    break;
-                }
+        if (user != User.EMPTY_USER) {
+            int c = users.get(user).indexOf(new Account(requisite, -1));
+            if (c != -1) {
+                result = users.get(user).get(c);
             }
         }
         return result;
