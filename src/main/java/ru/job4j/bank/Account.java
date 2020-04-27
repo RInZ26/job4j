@@ -8,10 +8,7 @@ import java.util.Objects;
  */
 
 public class Account {
-    /**
-     * Null - заглушка
-     */
-    public static final Account EMPTY_ACCOUNT = new Account("EMPTY_ACCOUNT", -1);
+
 
     private String requisite;
     private double balance;

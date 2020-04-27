@@ -4,13 +4,11 @@ import java.util.Objects;
 
 /**
  * Класс - модель данных Пользователь
+ *
  * @author RinZ26
  */
 public class User {
-    /**
-     * Null - заглушка
-     */
-    public final static User EMPTY_USER = new User("EMPTY_USER", "EMPTY_USER");
+
 
     private String passport;
     private String username;
