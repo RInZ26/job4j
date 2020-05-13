@@ -13,14 +13,13 @@ public class StringCompare implements Comparator<String> {
      */
     public int compare(String left, String right) {
 	int result = 0;
-	for (int leftCounter = 0, rightCounter = 0; leftCounter < left.length() && rightCounter < right.length(); leftCounter++, rightCounter++) {
-	    int diff = Character.compare(left.charAt(leftCounter), right.charAt(rightCounter));
+	for (int c = 0; c < Math.min(left.length(), right.length()); c++) {
+	    int diff = Character.compare(left.charAt(c), right.charAt(c));
 	    if (diff != 0) {
 		result = diff;
 		break;
 	    }
 	}
-	result = result == 0 ? left.length() - right.length() : result;
-	return result;
+	return result == 0 ? Integer.compare(left.length(), right.length()) : result;
     }
 }
