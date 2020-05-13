@@ -1,11 +1,9 @@
 package ru.job4j.lambda;
 
-import org.junit.Test;;
+import org.junit.Test;
 
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.function.Predicate;
 
 import static org.hamcrest.core.Is.is;
@@ -43,5 +41,23 @@ public class SchoolTest {
 	Predicate<Student> predictSeventyOneHundred = student -> student.getScore() <= 100 && student.getScore() >= 71;
 	List<Student> result = School.collect(listOfStudents, predictSeventyOneHundred);
 	assertThat(result, is(Arrays.asList(listOfStudents.get(1))));
+    }
+
+    /**
+     * Заполнение вручную, потому что циклы и т.п. в тестах плохо!
+     */
+    @Test
+    public void listToMapSimple() {
+	List<Student> listOfStudents = Arrays.asList(new Student("Yarkov", 11),
+		new Student("Skvorchuk", 99),
+		new Student("Panaeva", 56),
+		new Student("Ludishev", 39));
+	Map<String, Student> mapOfStudents = School.listToMap(listOfStudents);
+	Map<String, Student> expected = new HashMap<>();
+	expected.put(listOfStudents.get(0).getSurname(), listOfStudents.get(0));
+	expected.put(listOfStudents.get(1).getSurname(), listOfStudents.get(1));
+	expected.put(listOfStudents.get(3).getSurname(), listOfStudents.get(3));
+	expected.put(listOfStudents.get(2).getSurname(), listOfStudents.get(2));
+	assertThat(mapOfStudents, is(expected));
     }
 }
