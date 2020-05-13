@@ -1,6 +1,8 @@
 package ru.job4j.search;
 
 import java.util.ArrayList;
+import java.util.function.BiPredicate;
+import java.util.function.Predicate;
 
 /**
  * Класс - телефонный справочник
@@ -9,7 +11,7 @@ public class PhoneDictionary {
     private ArrayList<Person> persons = new ArrayList<Person>();
 
     public void add(Person person) {
-        this.persons.add(person);
+	this.persons.add(person);
     }
 
     /**
@@ -19,13 +21,18 @@ public class PhoneDictionary {
      * @return Список подощедщих пользователей.
      */
     public ArrayList<Person> find(String key) {
-        ArrayList<Person> result = new ArrayList<>();
-        for (Person person : persons) {
-            if (person.getName().contains(key) || person.getSurname().contains(key)
-                    || person.getAddress().contains(key) || person.getPhone().contains(key)) {
-                result.add(person);
-            }
-        }
-        return result;
+	BiPredicate<Person, String> predicateByName = (person, str) -> person.getName().contains(str);
+	BiPredicate<Person, String> predicateBySurname = (person, str) -> person.getSurname().contains(str);
+	BiPredicate<Person, String> predicateByAddress = (person, str) -> person.getAddress().contains(str);
+	BiPredicate<Person, String> predicateByPhone = (person, str) -> person.getPhone().contains(str);
+	BiPredicate<Person, String> combine = predicateByName.or(predicateBySurname).or(predicateByAddress).or(predicateByPhone);
+
+	ArrayList<Person> result = new ArrayList<>();
+	for (Person person : persons) {
+	    if (combine.test(person, key)) {
+		result.add(person);
+	    }
+	}
+	return result;
     }
 }
