@@ -1,7 +1,6 @@
 package ru.job4j.bank;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * Класс, реализующий взаимосвязную работу Account и User
@@ -30,36 +29,53 @@ public class BankService {
      * @param account  аккаунт
      */
     public void addAccount(String passport, Account account) {
-	User user = findByPassport(passport);
-	if (user != null) {
-	    users.get(user).add(account);
-	}
+	Optional<User> optionalUser = findOptionalUserByPassport(passport);
+	optionalUser.ifPresent(user -> users.get(user).add(account));
     }
 
     /**
-     * Поиск пользователя по паспорту
+     * Поиск пользователя по паспорту, посредством работы с результатом findOptionalUserByPassort
+     * По сути просто обработчик результата
      *
      * @param passport - ключ
      * @return User - null
      */
-    public User findByPassport(String passport) {
-	List<User> temp = users.keySet().stream().filter(o -> o.getPassport().equals(passport)).collect(Collectors.toList());
-	return temp.size() != 0 ? temp.get(0) : null;
+    public User findUserByPassport(String passport) {
+	return findOptionalUserByPassport(passport).orElse(null);
     }
 
     /**
-     * Поиск аккаунта по реквизиту и паспорту (максимально по-идиотские без Optional)
+     * Для лучшего масштабирования создаём отдельный метод для Optional
+     * Тут мы находим Optional<User> по пасспорту
+     *
+     * @param passport - ключ
+     * @return optional
+     */
+    private Optional<User> findOptionalUserByPassport(String passport) {
+	return users.keySet().stream().filter(x -> x.getPassport().equals(passport)).findFirst();
+    }
+
+    /**
+     * Обработка результатов findOptionalAccountByPassportAndRequisite
      *
      * @param passport  ~
      * @param requisite ~
      * @return Account - null
      */
-    public Account findByRequisite(String passport, String requisite) {
-	User user = findByPassport(passport);
-	List<Account> valueOfMap = user == null ? null
-		: users.get(user);
-	List<Account> result = valueOfMap == null ? null : valueOfMap.stream().filter(account -> account.getRequisite().equals(requisite)).collect(Collectors.toList());
-	return result != null && result.size() != 0 ? result.get(0) : null;
+    public Account findAccountByPassportAndRequisite(String passport, String requisite) {
+	return findOptionalAccountByPassportAndRequisite(passport, requisite).orElse(null);
+    }
+
+    /**
+     * Аналогично findOptionalPassport пытаемся сделать приватные методы, которые будут сейфово делать грязную работать через Optional
+     *
+     * @param passport  ключ
+     * @param requisite ключ
+     * @return optional
+     */
+    private Optional<Account> findOptionalAccountByPassportAndRequisite(String passport, String requisite) {
+	Optional<User> optionalUser = findOptionalUserByPassport(passport);
+	return optionalUser.isPresent() ? users.get(optionalUser.get()).stream().filter(x -> x.equals(new Account(requisite, -1))).findFirst() : Optional.empty();
     }
 
     /**
@@ -75,11 +91,12 @@ public class BankService {
     public boolean transferMoney(String srcPassport, String srcRequisite,
 				 String destPassport, String destRequisite, double amount) {
 	boolean result = false;
-	Account src = findByRequisite(srcPassport, srcRequisite);
-	Account dest = findByRequisite(destPassport, destRequisite);
-	if (src != null && dest != null && src.getBalance() >= amount) {
-	    src.setBalance(src.getBalance() - amount);
-	    dest.setBalance(dest.getBalance() + amount);
+	Optional<Account> srcOptionalAccount = findOptionalAccountByPassportAndRequisite(srcPassport, srcRequisite);
+	Optional<Account> destOptionalAccount = findOptionalAccountByPassportAndRequisite(destPassport, destRequisite);
+	boolean isAccountsExist = srcOptionalAccount.isPresent() && destOptionalAccount.isPresent();
+	if (isAccountsExist && srcOptionalAccount.get().getBalance() >= amount) {
+	    srcOptionalAccount.get().setBalance(srcOptionalAccount.get().getBalance() - amount);
+	    destOptionalAccount.get().setBalance(destOptionalAccount.get().getBalance() + amount);
 	    result = true;
 	}
 	return result;
