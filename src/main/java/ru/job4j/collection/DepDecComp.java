@@ -23,6 +23,6 @@ public class DepDecComp implements Comparator<String> {
 	String[] splittedO2 = o2.split("/");
 	String firstPartOfO1 = splittedO1.length == 0 ? o1 : splittedO1[0];
 	String secondPartOfO1 = splittedO2.length == 0 ? o2 : splittedO2[0];
-	return secondPartOfO1.compareTo(firstPartOfO1) == 0 ? o1.compareTo(o2) : o1.compareTo(o2);
+	return secondPartOfO1.compareTo(firstPartOfO1) == 0 ? o1.compareTo(o2) : o2.compareTo(o1);
     }
 }
