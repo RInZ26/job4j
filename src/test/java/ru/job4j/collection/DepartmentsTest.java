@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 
 public class DepartmentsTest {
@@ -15,7 +15,7 @@ public class DepartmentsTest {
 	List<String> input = Arrays.asList("k1/sk1");
 	List<String> expect = Arrays.asList("k1", "k1/sk1");
 	List<String> result = Departments.fillGaps(input);
-	Departments.sortAsc(result);
+	Collections.sort(result);
 	assertThat(result, is(expect));
     }
 
@@ -24,7 +24,7 @@ public class DepartmentsTest {
 	List<String> input = Arrays.asList("k1", "k1/sk1");
 	List<String> expect = Arrays.asList("k1", "k1/sk1");
 	List<String> result = Departments.fillGaps(input);
-	Departments.sortAsc(result);
+	Collections.sort(result);
 	assertThat(result, is(expect));
     }
 
@@ -50,7 +50,7 @@ public class DepartmentsTest {
 	    expect.set(c, expect.get(c).toLowerCase());
 	}
 	List<String> result = Departments.fillGaps(input);
-	Departments.sortAsc(result);
+	Collections.sort(result);
 	assertThat(result, is(expect));
     }
 }

@@ -25,11 +25,19 @@ public class Departments {
 	}
 	return new ArrayList<>(rsl);
     }
-
+    /*
     public static void sortAsc(List<String> orgs) {
 	Collections.sort(orgs);
     }
 
     public static void sortDesc(List<String> orgs) {
+	Collections.sort(orgs, ((Comparator<String>) (o1, o2) -> {
+	    String[] splittedO1 = o1.split("/");
+	    String[] splittedO2 = o2.split("/");
+	    o1 = splittedO1.length == 0 ? o1 : splittedO1[0];
+	    o2 = splittedO2.length == 0 ? o2 : splittedO2[0];
+	    return o1.compareTo(o2);
+	}).thenComparing(String::compareTo));
     }
+     */
 }

@@ -11,35 +11,18 @@ public class DepDecComp implements Comparator<String> {
     /**
      * Сначала нужно проверить, что строка сплитуется
      * Если нет, значит это одиночный K  и мы его кидаем в неотсплитованный массив
-     * Далее сравниваем подстроки между собой до тех пор, пока их количество совпадает в обоих массивах.
-     * Если разницы не выявлено, проверяем одиноково ли в строках символов
+     * Потом просто сортировка обычная
      *
-     * @param left первая строка
-     * @param right вторая строка
+     * @param o1 первая строка
+     * @param o2 вторая строка
      * @return результат сравнения
      */
     @Override
-    public int compare(String left, String right) {
-	int diff = 0;
-	String[] splittedLeft = left.split("/");
-	String[] splittedRight = right.split("/");
-	if (splittedLeft.length == 0) {
-	    splittedLeft = new String[]{left};
-	}
-	if (splittedRight.length == 0) {
-	    splittedRight = new String[]{right};
-	}
-
-	for (int c = 0; c < splittedLeft.length && c < splittedRight.length; c++) {
-	    diff = c == 0 ? splittedRight[c].compareTo(splittedLeft[c]) : splittedLeft[c].compareTo(splittedRight[c]);
-	    if (diff != 0) {
-		break;
-	    }
-	}
-	if (diff == 0 && left.length() != right.length()) {
-	    diff = left.length() - right.length();
-	}
-
-	return diff;
+    public int compare(String o1, String o2) {
+	String[] splittedO1 = o1.split("/");
+	String[] splittedO2 = o2.split("/");
+	String firstPartOfO1 = splittedO1.length == 0 ? o1 : splittedO1[0];
+	String secondPartOfO1 = splittedO2.length == 0 ? o2 : splittedO2[0];
+	return secondPartOfO1.compareTo(firstPartOfO1) == 0 ? o1.compareTo(o2) : o1.compareTo(o2);
     }
 }
