@@ -60,4 +60,15 @@ public class SchoolTest {
 	expected.put(listOfStudents.get(2).getSurname(), listOfStudents.get(2));
 	assertThat(mapOfStudents, is(expected));
     }
+
+    @Test
+    public void levelOfTest() {
+	List<Student> actual = Arrays.asList(new Student("Yarkov", 11),
+		new Student("Skvorchuk", 99),
+		new Student("Panaeva", 56),
+		new Student("Ludishev", 39));
+	List<Student> expected = Arrays.asList(
+		actual.get(1));
+	assertThat(School.levelOf(actual, 90), is(expected));
+    }
 }

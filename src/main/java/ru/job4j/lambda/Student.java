@@ -1,10 +1,12 @@
 package ru.job4j.lambda;
 
+import java.util.Comparator;
+
 /**
  * Класс-модель данных для работы с stream
  * @author RinZ26
  */
-public class Student {
+public class Student implements Comparable<Student> {
     String surname;
     int score;
 
@@ -29,4 +31,9 @@ public class Student {
 	this.score = score;
     }
 
+
+    @Override
+    public int compareTo(Student o) {
+	return Integer.compare(this.getScore(), o.getScore());
+    }
 }
