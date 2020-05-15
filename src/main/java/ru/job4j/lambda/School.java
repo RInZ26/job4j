@@ -31,7 +31,7 @@ public class School {
      * @return Map
      */
     static Map<String, Student> listToMap(List<Student> listOfStudents) {
-	return listOfStudents.stream().collect(Collectors.toMap(Student::getSurname, student -> student));
+	return listOfStudents.stream().collect(Collectors.toMap(Student::getSurname, student -> student, (v1, v2) -> v1));
     }
 
     /**
