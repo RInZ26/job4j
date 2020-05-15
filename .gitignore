@@ -14,6 +14,8 @@ tmp/*
 
 # java specific
 *.class
+MyTestsTest.java
+MyTests.java
 
 # python specific
 *.pyc
