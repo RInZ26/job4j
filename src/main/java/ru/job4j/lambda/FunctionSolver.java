@@ -12,7 +12,7 @@ import java.util.function.Function;
 public class FunctionSolver {
     public static List<Double> diapason(int start, int end, Function<Double, Double> y) {
 	List<Double> values = new ArrayList<>();
-	for (int c = Math.min(start, end); c < Math.max(start, end); c++) {
+	for (int c = start; c < end; c++) {
 	    values.add(y.apply((double) c));
 	}
 	return values;
