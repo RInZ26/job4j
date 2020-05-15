@@ -1,16 +1,15 @@
 package ru.job4j.search;
 
+import jdk.jshell.PersistentSnippet;
+
 import java.util.ArrayList;
-import java.util.function.BiPredicate;
-import java.util.function.Consumer;
-import java.util.function.Function;
 import java.util.function.Predicate;
 
 /**
  * Класс - телефонный справочник
  */
 public class PhoneDictionary {
-    private ArrayList<Person> persons = new ArrayList<Person>();
+    private ArrayList<Person> persons = new ArrayList<>();
 
     public void add(Person person) {
 	this.persons.add(person);
@@ -28,7 +27,7 @@ public class PhoneDictionary {
 	Predicate<Person> predicateByAddress = (person) -> person.getAddress().contains(key);
 	Predicate<Person> predicateByPhone = (person) -> person.getPhone().contains(key);
 	Predicate<Person> combine = predicateByName.or(predicateBySurname).or(predicateByAddress).or(predicateByPhone);
-	ArrayList<Person> result = new ArrayList<>();
+	var result = new ArrayList<Person>();
 	for (Person person : persons) {
 	    if (combine.test(person)) {
 		result.add(person);
