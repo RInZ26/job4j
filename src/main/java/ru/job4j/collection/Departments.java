@@ -14,7 +14,6 @@ public class Departments {
 
 	Set<String> rsl = new HashSet<>();
 	for (String record : deps) {
-	    record = record.toLowerCase();
 	    String[] splittedString = record.split("/");
 	    String partOfRecord = "";
 	    for (int c = 0; c < splittedString.length; c++) {
